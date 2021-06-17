@@ -1,0 +1,124 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+          <script type="text/javascript">
+//COLOR OF SVG           
+    $(document).ready(function() 
+    {
+
+        //Redo XML
+        jQuery('img.svg').each(function(){
+            var $img = jQuery(this);
+            var imgID = $img.attr('id');
+            var imgClass = $img.attr('class');
+            var imgURL = $img.attr('src');
+
+            jQuery.get(imgURL, function(data) {
+                // Get the SVG tag, ignore the rest
+                var $svg = jQuery(data).find('svg');
+
+                // Add replaced image's ID to the new SVG
+                if(typeof imgID !== 'undefined') {
+                    $svg = $svg.attr('id', imgID);
+                }
+                // Add replaced image's classes to the new SVG
+                if(typeof imgClass !== 'undefined') {
+                    $svg = $svg.attr('class', imgClass+' replaced-svg');
+                }
+
+                // Remove any invalid XML tags as per http://validator.w3.org
+                $svg = $svg.removeAttr('xmlns:a');
+
+                // Replace image with new SVG
+                $img.replaceWith($svg);
+
+            }, 'xml');
+
+        });
+
+    });
+
+    function changeColor(color)
+    {
+
+        //obj Father
+        $("#imgSvg").css("fill", color);
+        //objs children
+        $('#imgSvg').children().css('fill', color);
+    }
+    
+//END    
+    //CHANGE COLOR OF DIV
+    function changeHeadingBg(color){
+        document.getElementById("svgtime").style.background = color;
+    }
+    </script>
+
+</head>
+<body>
+    <style>
+        .calculator {
+    display:flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    align-content: center;
+    align-items: center;
+    
+}
+.calculator button{
+    width:20px;
+    height:20px;
+}
+
+
+
+button.red {
+    background:red;
+}
+
+button.green {
+    background:green;
+}
+
+button.blue {
+    background:blue;
+}
+
+button.white {
+    background:white;
+}
+
+button.black {
+    background:black;
+}
+
+button.orange {
+    background:orange;
+}
+    </style>
+    <div class="calculator">
+        <div id="svgtime" width="350">
+            <img id="imgSvg" xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg" src="thesvg.svg" />
+        </div>
+        <div class="calcuatorbutton">
+            <div class="toixosch">
+                <h2>Επιλέξτε το χρώμα του τοίχου σας</h2>
+                    <p>Σε αυτή την παλέτα, επιλέξτε ένα χρώμα που να προσομοιάζει με εκείνο του τοίχου στον οποίο πρόκειται να επικολλήσετε αυτό το wall sticker.</p>
+                <button class="red" type="button" onclick="changeHeadingBg('red');"></button>
+                <button class="green" type="button" onclick="changeHeadingBg('green');"></button>
+                <button class="blue" type="button" onclick="changeHeadingBg('blue');"></button>
+            </div>
+            <div class="autoch">
+                <h2>Επιλέξτε το χρώμα για το αυτοκόλλητό σας</h2>
+                    <p>Τώρα σε αυτή τη χρωματική παλέτα επιλέξτε το χρώμα ή τα χρώματα του αυτοκόλλητου που να σας ταιριάζει με εκείνο του τοίχου στον οποίο θα το επικολλήσετε</p>
+                <button class="red" onclick="changeColor('red')"></button>
+                <button class="white" onclick="changeColor('#FFF')"></button>
+                <button class="black" onclick="changeColor('#000')"></button>
+                <button class="orange" onclick="changeColor('#F48024')"></button>
+            </div>
+        </div>
+    </div>
+   
+     
+    </body>
